@@ -21,6 +21,7 @@ jobs:
       - name: Check results
         run: |
           SECRETS=$(cat ./detect-secrets.json | jq '.results[] | length')
+          echo $SECRETS
           if ! [ -z $SECRETS ]; then echo "hello"; exit 1; fi
       - name: Backup Report
         uses: actions/upload-artifact@v2
@@ -43,7 +44,8 @@ jobs:
           python -m pip install bandit
       - name: run bandit
         run: |
-          bandit -r functions/ -n 3 -f html -o bandit.html
+          bandit -r functions/ -n 3 -f json -o bandit.json
+          cat bandit.json
       - name: Backup Report
         if: always()
         uses: actions/upload-artifact@v2
@@ -90,6 +92,7 @@ jobs:
       - name: Check results
         run: |
           VULN=$(cat ./dependency-check-report.html | pup '#vulnerableCount text{}')
+          cat $VULN
           if [ $VULN -gt 0 ]; then exit 1; fi
       - name: Upload Test results
         uses: actions/upload-artifact@v2
