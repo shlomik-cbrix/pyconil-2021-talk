@@ -92,7 +92,7 @@ jobs:
       - name: Check results
         run: |
           VULN=$(cat ./dependency-check-report.html | pup '#vulnerableCount text{}')
-          cat $VULN
+          echo $VULN
           if [ $VULN -gt 0 ]; then exit 1; fi
       - name: Upload Test results
         uses: actions/upload-artifact@v2
