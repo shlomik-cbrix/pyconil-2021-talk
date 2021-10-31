@@ -22,6 +22,3 @@ The security workflow includes the following security controls:
 * SCA using OWASP `dependency-check`
 * Github MFA checker
 
-
-
-
